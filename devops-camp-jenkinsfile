@@ -26,6 +26,8 @@ pipeline {
         }
         stage('Application docker build') {
             steps {
+                  echo "Building application image"
+                //TODO("Lab 4 - Artifact Management"): build the docker app image
                 withCredentials([usernameColonPassword(credentialsId: 'rrice-harbor-auth', variable: 'HARBOR-AUTH')]) {
                     script {
                         sh 'docker build -t $APP_IMAGE_NAME-$COMMIT_HASH -f ./app/Dockerfile ./afs-labs-student'
@@ -35,9 +37,6 @@ pipeline {
                         }
                     }
                 }
-                
-                echo "Building application image"
-                //TODO("Lab 4 - Artifact Management"): build the docker app image
             }
             post {
                 always {
@@ -57,6 +56,8 @@ pipeline {
         }
         stage('Database docker build') {
             steps {
+                echo "Building database image"
+                //TODO("Lab 4 - Artifact Management"): build the docker db image
                 withCredentials([usernameColonPassword(credentialsId: 'rrice-harbor-auth', variable: 'HARBOR-AUTH')]) {
                     script {
                         sh 'docker build -t $DB_IMAGE_NAME-$COMMIT_HASH -f ./db/Dockerfile ./afs-labs-student'
@@ -66,8 +67,6 @@ pipeline {
                         }
                     }
                 }
-                echo "Building database image"
-                //TODO("Lab 4 - Artifact Management"): build the docker db image
             }
             post {
                 always {
